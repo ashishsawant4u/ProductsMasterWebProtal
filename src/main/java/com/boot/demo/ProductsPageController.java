@@ -6,6 +6,7 @@ package com.boot.demo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ public class ProductsPageController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ProductsPageController.class);
 	
-	
+	@LoadBalanced
 	@Bean
 	public RestTemplate template() {
 	    return new RestTemplate();
@@ -34,7 +35,7 @@ public class ProductsPageController {
 		
 		model.addAttribute("title", "Products Master Data");
 		
-		String stockAndPriceUrl = "http://localhost:8022/prouctsMS/getProducts";
+		String stockAndPriceUrl = "http://PRODUCTSMS/prouctsMS/getProducts";
 		
 		
 		ResponseEntity<ProductData[]> resp = restTemplate.getForEntity(stockAndPriceUrl,ProductData[].class);
